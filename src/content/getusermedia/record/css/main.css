@@ -21,13 +21,12 @@ p.borderBelow {
   padding: 0 0 20px 0;
 }
 
-video {
-  height: 232px;
-  margin: 0 12px 20px 0;
+video, canvas {
+  height: 300px;
+  width: 300px;
+  margin: 0 0 20px 0;
   vertical-align: top;
-  width: calc(20em - 10px);
 }
-
 
 video:last-of-type {
   margin: 0 0 20px 0;
