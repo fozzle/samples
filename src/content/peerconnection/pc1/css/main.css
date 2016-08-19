@@ -11,14 +11,15 @@ button {
 }
 
 button#hangupButton {
-    margin: 0;
+  margin: 0;
+  display: none;
 }
 
-video {
-  height: 225px;
+video, canvas {
+  height: 300px;
+  width: 300px;
   margin: 0 0 20px 0;
   vertical-align: top;
-  width: calc(50% - 12px);
 }
 
 video#localVideo {
