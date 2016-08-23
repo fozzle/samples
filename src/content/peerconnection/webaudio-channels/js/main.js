@@ -13,11 +13,29 @@
 var startButton = document.getElementById('startButton');
 var callButton = document.getElementById('callButton');
 var hangupButton = document.getElementById('hangupButton');
+var toggleSourceButton = document.getElementById('sourceAudio');
+var muted = true;
 callButton.disabled = true;
 hangupButton.disabled = true;
 startButton.onclick = start;
 callButton.onclick = call;
 hangupButton.onclick = hangup;
+toggleSourceButton.onclick = toggleSource;
+
+var ac = new AudioContext();
+var merger = ac.createChannelMerger(2);
+var osc = ac.createOscillator();
+osc.frequency.value = 100;
+osc.start();
+
+function toggleSource() {
+  if (muted) {
+    merger.connect(ac.destination);
+  } else {
+    merger.disconnect(ac.destination);
+  }
+  muted = !muted;
+}
 
 var canvas = document.querySelector('canvas');
 
@@ -98,11 +116,6 @@ function call() {
   }
 
   // Change channels
-  var ac = new AudioContext();
-  var merger = ac.createChannelMerger(2);
-  var osc = ac.createOscillator();
-  osc.frequency.value = 100;
-  osc.start();
   var newStream = new webkitMediaStream();
   var audioStreamNode = ac.createMediaStreamSource(localStream);
   var audioStreamDestination = ac.createMediaStreamDestination();
