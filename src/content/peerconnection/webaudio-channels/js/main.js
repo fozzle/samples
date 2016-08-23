@@ -14,7 +14,6 @@ var startButton = document.getElementById('startButton');
 var callButton = document.getElementById('callButton');
 var hangupButton = document.getElementById('hangupButton');
 var toggleSourceButton = document.getElementById('sourceAudio');
-var muted = true;
 callButton.disabled = true;
 hangupButton.disabled = true;
 startButton.onclick = start;
@@ -25,16 +24,13 @@ toggleSourceButton.onclick = toggleSource;
 var ac = new AudioContext();
 var merger = ac.createChannelMerger(2);
 var osc = ac.createOscillator();
+var gainNode = ac.createGain();
+gainNode.gain.value = 0;
 osc.frequency.value = 100;
 osc.start();
 
 function toggleSource() {
-  if (muted) {
-    merger.connect(ac.destination);
-  } else {
-    merger.disconnect(ac.destination);
-  }
-  muted = !muted;
+  gainNode.gain.value = gainNode.gain.value ? 0 : 1;
 }
 
 var canvas = document.querySelector('canvas');
@@ -125,6 +121,8 @@ function call() {
   splitter.connect(merger, 0, 0);
   osc.connect(merger, 0, 1);
   merger.connect(audioStreamDestination);
+  merger.connect(gainNode);
+  gainNode.connect(ac.destination);
 
   var newAudioTrack = audioStreamDestination.stream.getAudioTracks()[0];
   newStream.addTrack(newAudioTrack);

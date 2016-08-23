@@ -45,7 +45,10 @@ function StreamVisualizer(remoteStream, canvas) {
   console.log('Created Web Audio source from remote stream: ', this.source);
 
   this.analyser = this.context.createAnalyser();
-
+  this.gain = this.context.createGain();
+  this.gain.gain.value = 0;
+  this.gain.connect(this.context.destination);
+  this.analyser.connect(this.gain);
   this.analyser.minDecibels = -140;
   this.analyser.maxDecibels = 0;
   this.freqs = new Uint8Array(this.analyser.frequencyBinCount);
@@ -55,19 +58,13 @@ function StreamVisualizer(remoteStream, canvas) {
 
   this.startTime = 0;
   this.startOffset = 0;
-  this.muted = true;
 
   var toggleReceivedButton = document.getElementById('receivedAudio');
   toggleReceivedButton.onclick = this.toggleReceived.bind(this);
 }
 
 StreamVisualizer.prototype.toggleReceived = function() {
-  if (this.muted) {
-    this.analyser.connect(this.context.destination);
-  } else {
-    this.analyser.disconnect(this.context.destination);
-  }
-  this.muted = !this.muted;
+  this.gain.gain.value = this.gain.gain.value ? 0 : 1;
 };
 
 StreamVisualizer.prototype.start = function() {
