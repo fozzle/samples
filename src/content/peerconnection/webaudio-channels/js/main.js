@@ -116,7 +116,8 @@ function call() {
   }
 
   // Change channels
-  var newStream = new webkitMediaStream();
+  window.MediaStream = window.MediaStream || window.webkitMediaStream;
+  var newStream = new window.MediaStream();
   var audioStreamNode = ac.createMediaStreamSource(localStream);
   var audioStreamDestination = ac.createMediaStreamDestination();
   var splitter = ac.createChannelSplitter(2);
