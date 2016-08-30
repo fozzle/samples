@@ -178,6 +178,7 @@ function download() {
 function clock(){
   var now = new Date();
   var ctx = document.getElementById('localVideo').getContext('2d');
+  console.log('hi', now);
   ctx.save();
   ctx.clearRect(0,0,150,150);
   ctx.translate(75,75);
@@ -269,7 +270,7 @@ function clock(){
 
   ctx.restore();
 
-  window.requestAnimationFrame(clock);
+  window.setTimeout(clock, 33);
 }
 
-window.requestAnimationFrame(clock);
+window.setTimeout(clock, 33);
