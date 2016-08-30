@@ -39,7 +39,7 @@
 
     <p>For more information see the MediaStream Recording API <a href="http://w3c.github.io/mediacapture-record/MediaRecorder.html" title="W3C MediaStream Recording API Editor's Draft">Editor's&nbsp;Draft</a>.</p>
 
-    <video id="gum" autoplay muted></video>
+    <canvas id="localVideo" width="150" height="150"></canvas>
     <video id="recorded" autoplay loop></video>
 
     <div>
@@ -53,9 +53,7 @@
   </div>
 
   <!-- include adapter for srcObject shim -->
-  <script src="../../../js/adapter.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script src="js/main.js"></script>
-  <script src="../../../js/lib/ga.js"></script>
-
 </body>
 </html>
